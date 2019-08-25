@@ -38,6 +38,12 @@
     "@types/jest": "^24.0.18",
     "jest": "^24.9.0",
     "ts-jest": "^24.0.2",
+    "tslint": "^5.19.0",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@types/lodash.range": "^3.2.6",
+    "lodash": "^4.17.15",
+    "lodash.range": "^3.2.0"
   }
 }
