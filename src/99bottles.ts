@@ -16,10 +16,10 @@ export class Bottles {
     switch (number) {
       case 0:
         return `${capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, ${this.quantity(number)} ${this.container(number)} of beer.
-Go to the store and buy some more, 99 bottles of beer on the wall.`
+${this.action(number)}, 99 bottles of beer on the wall.`
       default:
         return `${capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, ${this.quantity(number)} ${this.container(number)} of beer.
-Take ${this.pronoun(number)} down and pass it around, ${this.quantity(number - 1)} ${this.container(number - 1)} of beer on the wall.`
+${this.action(number)}, ${this.quantity(number - 1)} ${this.container(number - 1)} of beer on the wall.`
     }
   }
 
@@ -48,6 +48,13 @@ Take ${this.pronoun(number)} down and pass it around, ${this.quantity(number - 1
       return 'no more'
     }
     return String(number);
+  }
+
+  action(number: number): string {
+    if (number === 0) {
+      return 'Go to the store and buy some more';
+    }
+    return `Take ${this.pronoun(number)} down and pass it around`;
   }
 
   song() {

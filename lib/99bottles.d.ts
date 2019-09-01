@@ -7,5 +7,6 @@ export declare class Bottles {
     container(number: number): Container;
     pronoun(number: number): Pronoun;
     quantity(number: number): Quantity;
+    action(number: number): string;
     song(): string;
 }
