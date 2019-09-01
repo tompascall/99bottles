@@ -8,5 +8,6 @@ export declare class Bottles {
     pronoun(number: number): Pronoun;
     quantity(number: number): Quantity;
     action(number: number): string;
+    successor(number: number): number;
     song(): string;
 }

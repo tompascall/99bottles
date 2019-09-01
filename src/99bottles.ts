@@ -13,14 +13,8 @@ const capitalize = (q: Quantity) => {
 
 export class Bottles {
   verse(number: number) {
-    switch (number) {
-      case 0:
-        return `${capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, ${this.quantity(number)} ${this.container(number)} of beer.
-${this.action(number)}, 99 bottles of beer on the wall.`
-      default:
-        return `${capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, ${this.quantity(number)} ${this.container(number)} of beer.
-${this.action(number)}, ${this.quantity(number - 1)} ${this.container(number - 1)} of beer on the wall.`
-    }
+      return `${capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, ${this.quantity(number)} ${this.container(number)} of beer.
+${this.action(number)}, ${this.quantity(this.successor(number))} ${this.container(this.successor(number))} of beer on the wall.`
   }
 
   verses(from: number, to: number) {
@@ -55,6 +49,13 @@ ${this.action(number)}, ${this.quantity(number - 1)} ${this.container(number - 1
       return 'Go to the store and buy some more';
     }
     return `Take ${this.pronoun(number)} down and pass it around`;
+  }
+
+  successor(number: number): number {
+    if (number === 0) {
+      return 99;
+    }
+    return number - 1;
   }
 
   song() {
