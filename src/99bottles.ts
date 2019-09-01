@@ -4,16 +4,21 @@ export type Pronoun = 'one' | 'it';
 
 export type Container = 'bottle' | 'bottles';
 
-export type Quantity = 'no more' | number;
+export type Quantity = 'no more' | string;
+
+const capitalize = (q: Quantity) => {
+  const [head, ...rest] = q;
+  return `${head.toUpperCase()}${rest.join('')}`;
+};
 
 export class Bottles {
   verse(number: number) {
     switch (number) {
       case 0:
-        return `No more bottles of beer on the wall, no more bottles of beer.
+        return `${capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, ${this.quantity(number)} ${this.container(number)} of beer.
 Go to the store and buy some more, 99 bottles of beer on the wall.`
       default:
-        return `${number} ${this.container(number)} of beer on the wall, ${number} ${this.container(number)} of beer.
+        return `${capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, ${this.quantity(number)} ${this.container(number)} of beer.
 Take ${this.pronoun(number)} down and pass it around, ${this.quantity(number - 1)} ${this.container(number - 1)} of beer on the wall.`
     }
   }
@@ -42,7 +47,7 @@ Take ${this.pronoun(number)} down and pass it around, ${this.quantity(number - 1
     if (number === 0) {
       return 'no more'
     }
-    return number;
+    return String(number);
   }
 
   song() {
