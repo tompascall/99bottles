@@ -11,17 +11,10 @@ const capitalize = (q: Quantity) => {
   return `${head.toUpperCase()}${rest.join('')}`;
 };
 
-export class Bottles {
-  verse(number: number) {
-      return `${capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, ${this.quantity(number)} ${this.container(number)} of beer.
-${this.action(number)}, ${this.quantity(this.successor(number))} ${this.container(this.successor(number))} of beer on the wall.`
-  }
-
-  verses(from: number, to: number) {
-    return range(from, to - 1)
-      .map(i => this.verse(i))
-      .join('\n\n');
-  }
+class BottleNumber {
+  constructor(
+    private number: number,
+  ) {}
 
   container(number: number): Container {
     if (number === 1) {
@@ -56,6 +49,38 @@ ${this.action(number)}, ${this.quantity(this.successor(number))} ${this.containe
       return 99;
     }
     return number - 1;
+  }
+}
+
+export class Bottles {
+  verse(number: number) {
+      return `${capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, ${this.quantity(number)} ${this.container(number)} of beer.
+${this.action(number)}, ${this.quantity(this.successor(number))} ${this.container(this.successor(number))} of beer on the wall.`
+  }
+
+  verses(from: number, to: number) {
+    return range(from, to - 1)
+      .map(i => this.verse(i))
+      .join('\n\n');
+  }
+  container(number: number): Container {
+    return new BottleNumber(number).container(number);
+  }
+
+  pronoun(number: number): Pronoun {
+    return new BottleNumber(number).pronoun(number);
+  }
+
+  quantity(number: number): Quantity {
+    return new BottleNumber(number).quantity(number);
+  }
+
+  action(number: number): string {
+    return new BottleNumber(number).action(number);
+  }
+
+  successor(number: number): number {
+    return new BottleNumber(number).successor(number);
   }
 
   song() {
