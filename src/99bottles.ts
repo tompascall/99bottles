@@ -16,39 +16,39 @@ class BottleNumber {
     private number: number,
   ) {}
 
-  container(number: number): Container {
-    if (number === 1) {
+  container(): Container {
+    if (this.number === 1) {
       return 'bottle';
     }
     return 'bottles';
   }
 
-  pronoun(number: number): Pronoun {
-    if (number === 1) {
+  pronoun(): Pronoun {
+    if (this.number === 1) {
       return 'it';
     }
     return 'one';
   }
 
-  quantity(number: number): Quantity {
-    if (number === 0) {
+  quantity(): Quantity {
+    if (this.number === 0) {
       return 'no more'
     }
-    return String(number);
+    return String(this.number);
   }
 
-  action(number: number): string {
-    if (number === 0) {
+  action(): string {
+    if (this.number === 0) {
       return 'Go to the store and buy some more';
     }
-    return `Take ${this.pronoun(number)} down and pass it around`;
+    return `Take ${this.pronoun()} down and pass it around`;
   }
 
-  successor(number: number): number {
-    if (number === 0) {
+  successor(): number {
+    if (this.number === 0) {
       return 99;
     }
-    return number - 1;
+    return this.number - 1;
   }
 }
 
@@ -64,23 +64,23 @@ ${this.action(number)}, ${this.quantity(this.successor(number))} ${this.containe
       .join('\n\n');
   }
   container(number: number): Container {
-    return new BottleNumber(number).container(number);
+    return new BottleNumber(number).container();
   }
 
   pronoun(number: number): Pronoun {
-    return new BottleNumber(number).pronoun(number);
+    return new BottleNumber(number).pronoun();
   }
 
   quantity(number: number): Quantity {
-    return new BottleNumber(number).quantity(number);
+    return new BottleNumber(number).quantity();
   }
 
   action(number: number): string {
-    return new BottleNumber(number).action(number);
+    return new BottleNumber(number).action();
   }
 
   successor(number: number): number {
-    return new BottleNumber(number).successor(number);
+    return new BottleNumber(number).successor();
   }
 
   song() {
