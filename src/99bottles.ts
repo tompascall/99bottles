@@ -11,43 +11,28 @@ const capitalize = (s: string) => {
   return `${head.toUpperCase()}${rest.join('')}`;
 };
 
-class BottleNumber {
+export class BottleNumber {
   constructor(
-    private number: number,
+    protected number: number,
   ) {}
 
   container(): Container {
-    if (this.number === 1) {
-      return 'bottle';
-    }
     return 'bottles';
   }
 
   pronoun(): Pronoun {
-    if (this.number === 1) {
-      return 'it';
-    }
     return 'one';
   }
 
   quantity(): Quantity {
-    if (this.number === 0) {
-      return 'no more'
-    }
     return String(this.number);
   }
 
   action(): string {
-    if (this.number === 0) {
-      return 'Go to the store and buy some more';
-    }
     return `Take ${this.pronoun()} down and pass it around`;
   }
 
   successor(): number {
-    if (this.number === 0) {
-      return 99;
-    }
     return this.number - 1;
   }
 
@@ -56,13 +41,57 @@ class BottleNumber {
   }
 }
 
+
+export class BottleNumber0 extends BottleNumber {
+  constructor(number: number) {
+    super(number);
+  }
+
+  quantity(): Quantity {
+    return 'no more';
+  }
+
+  action(): string {
+    return 'Go to the store and buy some more';
+  }
+
+  successor(): number {
+    return 99;
+  }
+}
+
+export class BottleNumber1 extends BottleNumber {
+  constructor(number: number) {
+    super(number);
+  }
+
+  container(): Container {
+    return 'bottle';
+  }
+
+  pronoun(): Pronoun {
+    return 'it';
+  }
+}
+
 export class Bottles {
   verse(number: number) {
-    const bottleNumber = new BottleNumber(number);
-    const nextBottleNumber = new BottleNumber(bottleNumber.successor());
+    const bottleNumber = this.bottleNumberFor(number);
+    const nextBottleNumber = this.bottleNumberFor(bottleNumber.successor());
 
     return capitalize(`${bottleNumber}`) + ` of beer on the wall, ${bottleNumber} of beer.
 ${bottleNumber.action()}, ${nextBottleNumber} of beer on the wall.`
+  }
+
+  bottleNumberFor(number: number) {
+    switch (number) {
+      case 0:
+        return new BottleNumber0(number);
+      case 1:
+        return new BottleNumber1(number);
+      default:
+        return new BottleNumber(number);
+    }
   }
 
   verses(from: number, to: number) {
