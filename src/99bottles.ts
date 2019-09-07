@@ -2,7 +2,7 @@ import { range } from 'lodash';
 
 export type Pronoun = 'one' | 'it';
 
-export type Container = 'bottle' | 'bottles';
+export type Container = 'bottle' | 'bottles' | 'six pack';
 
 export type Quantity = 'no more' | string;
 
@@ -18,6 +18,8 @@ export class BottleNumber {
         return new BottleNumber0(number);
       case 1:
         return new BottleNumber1(number);
+      case 6:
+        return new BottleNumber6(number);
       default:
         return new BottleNumber(number);
     }
@@ -82,6 +84,20 @@ export class BottleNumber1 extends BottleNumber {
 
   pronoun(): Pronoun {
     return 'it';
+  }
+}
+
+export class BottleNumber6 extends BottleNumber {
+  constructor(number: number) {
+    super(number);
+  }
+
+  container(): Container {
+    return 'six pack';
+  }
+
+  quantity(): Quantity {
+    return '1';
   }
 }
 
