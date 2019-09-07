@@ -6,8 +6,8 @@ export type Container = 'bottle' | 'bottles';
 
 export type Quantity = 'no more' | string;
 
-const capitalize = (q: Quantity) => {
-  const [head, ...rest] = q;
+const capitalize = (s: string) => {
+  const [head, ...rest] = s;
   return `${head.toUpperCase()}${rest.join('')}`;
 };
 
@@ -50,6 +50,10 @@ class BottleNumber {
     }
     return this.number - 1;
   }
+
+  toString(): string {
+    return `${this.quantity()} ${this.container()}`;
+  }
 }
 
 export class Bottles {
@@ -57,11 +61,8 @@ export class Bottles {
     const bottleNumber = new BottleNumber(number);
     const nextBottleNumber = new BottleNumber(bottleNumber.successor());
 
-    return `${
-      capitalize(bottleNumber.quantity())} ${bottleNumber.container()} of beer on the wall, ${
-        bottleNumber.quantity()} ${bottleNumber.container()} of beer.
-${bottleNumber.action()}, ${nextBottleNumber.quantity()} ${
-  nextBottleNumber.container()} of beer on the wall.`
+    return capitalize(`${bottleNumber}`) + ` of beer on the wall, ${bottleNumber} of beer.
+${bottleNumber.action()}, ${nextBottleNumber} of beer on the wall.`
   }
 
   verses(from: number, to: number) {
