@@ -12,6 +12,17 @@ const capitalize = (s: string) => {
 };
 
 export class BottleNumber {
+  static for(number: number): BottleNumber {
+    switch (number) {
+      case 0:
+        return new BottleNumber0(number);
+      case 1:
+        return new BottleNumber1(number);
+      default:
+        return new BottleNumber(number);
+    }
+  }
+
   constructor(
     protected number: number,
   ) {}
@@ -32,8 +43,8 @@ export class BottleNumber {
     return `Take ${this.pronoun()} down and pass it around`;
   }
 
-  successor(): number {
-    return this.number - 1;
+  successor(): BottleNumber {
+    return BottleNumber.for(this.number - 1);
   }
 
   toString(): string {
@@ -55,8 +66,8 @@ export class BottleNumber0 extends BottleNumber {
     return 'Go to the store and buy some more';
   }
 
-  successor(): number {
-    return 99;
+  successor(): BottleNumber {
+    return BottleNumber.for(99);
   }
 }
 
@@ -76,22 +87,10 @@ export class BottleNumber1 extends BottleNumber {
 
 export class Bottles {
   verse(number: number) {
-    const bottleNumber = this.bottleNumberFor(number);
-    const nextBottleNumber = this.bottleNumberFor(bottleNumber.successor());
+    const bottleNumber = BottleNumber.for(number);
 
     return capitalize(`${bottleNumber}`) + ` of beer on the wall, ${bottleNumber} of beer.
-${bottleNumber.action()}, ${nextBottleNumber} of beer on the wall.`
-  }
-
-  bottleNumberFor(number: number) {
-    switch (number) {
-      case 0:
-        return new BottleNumber0(number);
-      case 1:
-        return new BottleNumber1(number);
-      default:
-        return new BottleNumber(number);
-    }
+${bottleNumber.action()}, ${bottleNumber.successor()} of beer on the wall.`
   }
 
   verses(from: number, to: number) {
